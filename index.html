@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FIT file viewer</title>  
+  <script type="module" src="/fitscripts/src/index.js"></script>
+  <script type="module" src="/scripts/mydecoder.js"></script>
+  <script type="module" src="/scripts/main.js"></script>
+  <script type="module" src="/scripts/fileholder.js"></script>
+  <script type="module" src="/scripts/detailsholder.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/style.css"/>  
+</head>
+<body>
+  <div id="page-wrapper">
+    <div class="input-box full-page-centered" data-role='input'>
+        <div class='prompt-icon-container'>
+          <img class='prompt-icon' src="/images/upload.svg" alt="Upload Icon">
+        </div>
+        <span class='input-prompt'>Select a .fit file from your device to load.</span>
+        <div class='input-button-wrapper'>
+          <label class='file-input-label'>
+            <input id="file-selector" type="file" data-role='file-selector'></input>
+            <span class='file-input-custom'>Browse</span>
+          </label>
+        </div>
+    </div>
+    <div id="app-container" class="hidden">
+      <div id="primary-controls" class="sidebar-left" data-role="sidebar-left">
+        <div class='sidebar-content'>
+          <div class='sidebar-summary' data-role="summary-container"></div>
+          <div class='sidebar-edit'>
+            <h5>Cut Controls</h5>
+            <div class='cut-inputs-container' data-role="edit-container">
+              <div class='edit-input-wrapper'>
+                <label class='edit-input-label' for="cut-start-input">Start Byte</label>
+                <input id="cut-start-input" type="number"></input>
+              </div>
+              <div class='edit-input-wrapper'>
+                <label class='edit-input-label' for="cut-end-input">End Byte</label>
+                <input id="cut-end-input" type="number"></input>
+              </div>
+              <div class='sidebar-button-wrapper'>
+                <button data-role="submit-cut">Cut Bytes</button>
+              </div>
+            </div>
+          </div>
+          <div class='grid-container' data-role="grid-container"></div>
+        </div>
+        <div class='sidebar-tab'>
+          <button class='toggle-button' data-role="sidebar-toggle">
+            <img class='toggle-icon' src="/images/caret-left.svg" alt="Toggle Close Icon">   
+          </button>
+        </div>
+      </div>
+      <div class='file-display-container' data-role="details-container"></div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,472 @@
+:root {
+    --off-white: #e7e7e7;
+    --off-black: #000500;
+    --orange: #f79322;
+    --yellow: #ffe200;
+    --green: #46da24;
+    --pink: #e32c7c;
+    --red: #e70101;
+    --blue: #33ccff;
+    --purple: #b152ff;
+    --light-border: #dedede;
+}
+
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+#page-wrapper {
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    position: absolute;
+    overflow: auto; /*prevent scroll 'transfer' from sidebar to detail panel*/
+}
+
+/*
+ ****** Input Box **********
+ */
+
+.input-prompt {
+    margin-top: 30px;
+}
+
+.input-button-wrapper {
+    width: 175px;
+    margin-top: 30px;
+}
+
+.file-input-label {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+}
+
+.file-input-label input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.file-input-custom {
+    position: relative;
+    display: block;
+    padding: 10px 0;
+    width: 100%;
+    min-height: 32px;
+    text-align: center;
+    background-color: #0070ff;
+    border-radius: 100px;
+    color: #ffffff;
+}
+
+.file-input-custom:hover {
+    /*background-color: #0068ec;*/
+    filter: brightness(85%);
+}
+
+.file-input-custom:active {
+    /*background-color: #0057c7;*/
+    filter: brightness(80%);
+}
+
+.input-box {
+    border: 8px dashed #cdcdcd;
+    border-radius: 20px;
+    padding: 30px 50px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    position: relative;
+    top: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.prompt-icon-container {
+    width: 40px;
+    height: 40px;
+}
+
+.prompt-icon-container img {
+    width: 100%;
+}
+
+.input-prompt {
+    text-align: center;
+}
+
+/*
+ ******* Sidebar and file-grid display *******
+ */
+
+.message-grid-container {
+    display: flex;
+    justify-content: center;
+}
+
+.message-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(30, min-content);
+}
+
+.message-bar {
+    width: 21px;
+    height: 8px;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+}
+
+.message-bar:hover {
+    filter: brightness(80%);
+}
+
+.sidebar-left {
+    width: 700px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    background-color: #fff;
+    border-right: 1px solid var(--light-border);
+    box-shadow: 0 2px 6px var(--light-border);
+    transition-property: transform;
+    transition-duration: .2s;
+    transform: translateX(0);
+}
+
+.sidebar-content {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.sidebar-content:hover {
+    scrollbar-width: thin;
+    overflow-y: scroll;
+}
+
+.active-byte {
+    border:solid 1px blue;
+}
+	
+.sidebar-left .sidebar-tab {
+    position: absolute;
+    top: 50px;
+    right: -30px; /*must be -1x toggle-button width*/
+    background-color: #fff;
+}
+
+.sidebar-left.closed .toggle-button {
+    transform: scaleX(-1);
+    border-radius: 6px 0 0 6px;
+}
+	
+.toggle-button {
+    height: 40px;
+    width: 30px;
+    box-shadow: 0 2px 6px var(--light-border);
+    border: 1px solid var(--light-border);
+    border-radius: 0 6px 6px 0;
+}
+
+.toggle-icon {
+    /* TODO opacity used for now until replaced by source with desired color */
+    opacity: 0.4;
+    vertical-align: middle;
+}
+
+.sidebar-left.closed {
+    transform: translateX(-100%);
+}
+
+/*
+ ********* Details Panel Overall Styles **********
+ */
+
+.file-display-container {
+    position: absolute;
+    right: 0;
+    min-height: 100vh;
+    width: calc(100vw - 700px);
+    transition: width 0.2s ease-out;
+}
+
+.file-display-container.fullscreen {
+    width: 100vw;
+}
+
+.details-wrapper { 
+  border-radius: 15px;
+  border: 5px solid #000000;
+  overflow-y: scroll;
+  width: 750px;
+  margin: 0 auto 10px auto;
+  transition: max-height 0.3s ease-out, 
+              opacity 0.3s ease-out, 
+              border 0.5s ease-out;
+  max-height: 100vh;
+}
+
+.details-wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.details-wrapper.closing {
+    max-height: 0px;
+    opacity: 0;
+}
+
+.details-header svg.close-icon {
+    display: block;
+    margin: 0 0 0 6px;
+    height: 24px;
+    width: 24px;
+}
+
+.details-close-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    opacity: 0.6;
+}
+
+.details-close-button:hover {
+   background-color: #0000001a;
+}
+
+.details-close-button:active {
+    background-color: #0000002f;
+}
+
+/*
+ *********** Details Panel Header Styles **********
+ */
+.details-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+    height: 50px;
+    border-bottom: 5px solid black;
+}
+
+.details-header.error-header{
+    background-color: var(--red);
+}
+
+.details-header.data-header{
+    background-color: var(--green);
+}
+
+.details-header.unnamed-data-header {
+    background-color: var(--orange);
+}
+
+.details-header.definition-header{
+    background-color: var(--blue);
+}
+
+.details-header.unnamed-definition-header {
+    background-color: var(--purple);
+}
+
+.details-header.fileheader-header{
+    background-color: var(--off-white);
+}
+
+.details-header.unknown-header{
+    background-color: var(--yellow);
+}
+
+.details-header-content {
+    margin: 0 auto;	
+    text-align: center;
+} 
+
+.details-titletext {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 5px 0;
+}
+
+.details-titletext.small {
+    font-size: 12px;
+}
+ 
+/*
+ *********** Details Panel Content Styles *********
+ */
+
+.bytes-container {
+    display: flex;
+}
+
+.bytegrid-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.bytegrid-row:last-child .bytes-container {
+    justify-content: flex-start;
+}
+
+.bytegrid-row:last-child .byteblock {
+    flex-grow: 0;
+}
+
+.bytegrid-row:last-child {
+    margin-bottom:0;
+}
+
+.bitblock-new {
+    font-size: 12px;
+    width: 75px;
+    display: inline-block;
+}
+
+.bitblocks-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.byteblock-new {
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff; /*need this to use brightness hover efx*/
+}
+
+.byteblock-new:hover {
+    filter: brightness(80%);
+}
+
+.byteblock-divider {
+    border: 1px solid var(--light-border);
+    margin: 0 5px;
+}
+
+.bits-container-new {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 12px
+}
+
+.byteblock-label-new {
+    padding: 5px 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.row-center {
+    flex-grow: 1;
+}
+
+.row-cap {
+    width: 30px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.wraparrow {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    opacity: 50%;
+}
+
+.wraparrow-right {
+    bottom: -5px;
+    left: 0;
+}
+
+.wraparrow-left {
+    top: -13px;
+    right: 0;
+}
+
+.row-divider {
+    padding-top: 10px;
+    border-bottom: 3px transparent;
+}
+
+.row-divider.divider-wrap {
+    border-bottom: 3px dotted #c0c0c0;
+    margin: 0 5px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.message-colorbar {
+    width: 10px;
+    margin-right: 5px;
+}
+
+.error-colorbar{
+    background-color: var(--red);
+}
+
+.data-colorbar{
+    background-color: var(--green);
+}
+
+.unnamed-data-colorbar{
+    background-color: var(--orange);
+}
+
+.definition-colorbar{
+    background-color: var(--blue);
+}
+
+.unnamed-definition-colorbar {
+    background-color: var(--purple);
+}
+
+.fileheader-colorbar{
+    background-color: var(--off-white);
+}
+
+.unknown-colorbar{
+    background-color: var(--yellow);
+}
+
+.unknowndata-colorbar{
+    background-color: var(--orange);
+}
+
+/*
+ *********** Edit Panel Styles *********
+ */
+ 
+ .cut-inputs-container {
+     display:flex;
+ } 
+ 
+ .edit-input-wrapper > label {
+     display: block;
+     font-size: 10px;
+ }
+ 
+ .edit-input-wrapper > input {
+     display: block;
+     border: 1px solid #000000;
+ }

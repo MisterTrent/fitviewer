@@ -1,0 +1,10 @@
+# ########### My gitignore settings ###########
+
+# VIM temp files
+*.swo
+*.swp
+
+# temp folder is just for quick file relocation & misc storage
+temp/
+
+logs/
